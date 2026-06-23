@@ -1,58 +1,45 @@
-# Legalize FR
+# legalize-fr
 
-### Législation française consolidée en Markdown, versionnée avec Git.
+France — législation en Markdown, versionnée sous forme de dépôt git.
 
-Chaque loi est un fichier. Chaque réforme est un commit.
+Chaque loi est un fichier ; chaque réforme est un commit daté de la véritable date de publication officielle. Le `git log` de toute loi présente son historique complet — quand elle a été promulguée, quels articles ont été modifiés et par quelle norme.
 
-**83 codes** · Source officielle LEGI/Légifrance
+Ce dépôt couvre les textes consolidés de la base LEGI de Légifrance. La phase initiale du pipeline se limite aux textes en vigueur dont la nature est « CODE » ou « CONSTITUTION » : les codes français consolidés et la Constitution du 4 octobre 1958. Chaque texte est un fichier Markdown ; chaque modification correspond à un commit git daté à la date de prise d'effet de la version, ce qui reconstitue l'historique des réformes article par article.
 
-Partie du projet [Legalize](https://github.com/legalize-dev/legalize) · [legalize.dev](https://legalize.dev)
+## Contenu
 
-> **Phase initiale** — Ce dépôt est en cours de développement actif. La structure des fichiers, l'historique des commits et le contenu peuvent subir des modifications importantes, y compris une régénération complète.
+- **Codes consolidés** (`LEGITEXTXXXXXXXXXXXX.md`) — `fr/LEGITEXT000006069414.md`
+- **Constitution** (`LEGITEXTXXXXXXXXXXXX.md`) — `fr/LEGITEXT000006071194.md`
+- **Lois, lois organiques, ordonnances et décrets** (`LEGITEXTXXXXXXXXXXXX.md`) — Natures LEGI LOI, LOI ORGANIQUE, ORDONNANCE, DÉCRET reconnues par le parseur (textes JORF). Hors périmètre de la phase initiale d'amorçage.
 
-## Démarrage rapide
+## Source des données
 
-```bash
-# Cloner la législation française
-git clone https://github.com/legalize-dev/legalize-fr.git
+- **Légifrance — base LEGI (Direction de l'information légale et administrative, DILA, services du Premier ministre)**
+  - Portail : https://www.legifrance.gouv.fr
+  - Jeu de données LEGI (data.gouv.fr) : https://www.data.gouv.fr/datasets/legi-codes-lois-et-reglements-consolides
+  - Dump Open Data LEGI (DILA) : https://echanges.dila.gouv.fr/OPENDATA/LEGI/
+  - Open data et API : https://www.legifrance.gouv.fr/contenu/pied-de-page/open-data-et-api
 
-# Rechercher un article dans le Code civil
-grep -A 5 "Article 1240" fr/LEGITEXT000006070721.md
+## Attribution
 
-# Historique des modifications d'un code
-git log --oneline -- fr/LEGITEXT000006070721.md
-```
+> Source : Direction de l'information légale et administrative (DILA) — base LEGI / Légifrance (https://www.legifrance.gouv.fr). Données réutilisées sous Licence Ouverte / Open Licence (Etalab) v2.0. Les textes ont été convertis au format Markdown par Legalize ; ils peuvent différer de la version officielle. Seules les versions publiées au Journal officiel et sur Légifrance font foi.
 
-## Structure
+## Précisions
 
-```
-fr/
-  LEGITEXT000006070721.md    — Code civil
-  LEGITEXT000006069414.md    — Code de commerce
-  LEGITEXT000006071154.md    — Code de procédure pénale
-  LEGITEXT000006072050.md    — Code du travail
-  ...                        — 83 codes consolidés
-```
+- Les identifiants de fichiers sont les identifiants LEGI officiels (préfixe `LEGITEXT` suivi de 12 chiffres).
+- La date de chaque version est la date de début (`debut`) de l'article ou de la section dans la base LEGI ; la valeur sentinelle `2999-01-01` (validité indéterminée) est traitée comme absente.
+- Les images sont volontairement écartées (le pipeline ne gère pas encore les fichiers binaires).
+- La portée actuelle est restreinte aux codes et à la Constitution ; les lois, ordonnances et décrets isolés (textes JORF) sont reconnus par le parseur mais ne sont pas inclus dans cette phase d'amorçage.
 
-Le type de texte (code, loi, ordonnance, décret) est indiqué dans le frontmatter YAML de chaque fichier, pas dans l'arborescence.
+## Autres pays
 
-## Format
+Ce dépôt fait partie de **Legalize**, qui maintient la législation de plusieurs pays sous forme de dépôts git. Consultez https://legalize.dev pour le catalogue complet.
 
-Chaque fichier contient :
+## Soutien
 
-- **Frontmatter YAML** — métadonnées : titre, identifiant, date de publication, état juridique, type de texte, identifiant ELI
-- **Corps Markdown** — texte consolidé avec structure hiérarchique (parties, livres, titres, chapitres, articles)
-
-Les commits utilisent la date historique de publication officielle au Journal Officiel. Chaque commit inclut des trailers avec l'identifiant du texte et de la réforme, ce qui permet de reconstruire l'historique législatif complet avec `git log`.
-
-## Source
-
-Données issues de la base [LEGI](https://www.data.gouv.fr/datasets/legi-codes-lois-et-reglements-consolides) (open data, licence ouverte Etalab 2.0), publiée par la [DILA](https://www.dila.premier-ministre.gouv.fr/).
+Legalize est libre et ouvert. Si ce travail vous est utile, vous pouvez contribuer à en financer l'hébergement et le développement : [Soutenir ce projet](https://buymeacoffee.com/legalizedev).
 
 ## Licence
 
-Les textes législatifs sont dans le domaine public. La structuration et le formatage sont sous licence [MIT](LICENSE).
-
----
-
-Créé par [Enrique Lopez](https://enriquelopez.eu) · [legalize.dev](https://legalize.dev)
+- **Code du pipeline** : MIT (https://github.com/legalize-dev/legalize-pipeline)
+- **Données** : Licence Ouverte / Open Licence (Etalab) v2.0
